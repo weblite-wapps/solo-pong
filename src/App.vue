@@ -1,24 +1,24 @@
 <template>
-    <div id="app"
-      :class="$style.root"
-      @mousemove="batPosition"
-      @mousedown="startTheGame"
-    >
-    <div v-if="gameOver" :class="$style.lost">
-      YOU LOST!
-      <br>
-      TRY AGAIN!
-    </div>
-    <div :class="$style.score">
-      Score: {{score}}
-    </div>
-      <div :style="{left: ballX+'px', top: ballY+'px'}"
-        :class="$style.ball">
-      </div>
-      <div :style="{left : batX+'px'}"
-        :class="$style.bat">
-      </div>
-    </div>
+<div id="app"
+    :class="$style.root"
+    @mousemove="batPosition"
+    @mousedown="startTheGame"
+>
+  <div v-if="gameOver" :class="$style.lost">
+    YOU LOST!
+    <br>
+    TRY AGAIN!
+  </div>
+  <div :class="$style.score">
+    Score: {{score}}
+  </div>
+  <div :style="{left: ballX+'px', top: ballY+'px'}"
+      :class="$style.ball">
+  </div>
+  <div :style="{left : batX+'px'}"
+      :class="$style.bat">
+  </div>
+</div>
 </template>
 
 
@@ -114,13 +114,12 @@ export default {
 <style module>
 .root {
   position:relative;
-  width: 500px;
-  height: 500px;
+  width: 100%;
+  height: 100%;
   display: flex;
   border: 5px #000000 solid;
   border-bottom: 0px;
   border-radius: 15px;
-  overflow: hidden;
   background: white;
   padding: 0px;
   margin: 0px;
@@ -128,7 +127,7 @@ export default {
 }
 
 .bat{
-  position: absolute;
+  position: relative;
   border: 5px;
   border-radius: 2px;
   background: black;
@@ -138,7 +137,7 @@ export default {
 }
 
 .ball{
-  position: absolute;
+  position: relative;
   border: 5px;
   border-radius: 10px;
   background: black;
@@ -149,7 +148,7 @@ export default {
 .lost{
   font-weight: bold;
   font-size: 30px;
-  position: absolute;
+  position: relative;
   top:180px;
   left:180px;
 }
