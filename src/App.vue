@@ -33,12 +33,13 @@ export default {
         batY:485,
         ballX:240,
         ballY:465,
-        ballSpeedX:0,
-        ballSpeedY:0,
+        ballSpeedX:0.0,
+        ballSpeedY:0.0,
         gameOnGoing:false,
         gameOver:false,
       }
     },
+
     methods:{
       batPosition:function(event){
         if(event.clientX<500 && this.gameOnGoing===true)
@@ -54,22 +55,21 @@ export default {
           this.ballSpeedX=Math.floor(Math.random() * 2)-1
           if(this.ballSpeedX>=0)
           {
-            this.ballSpeedX+=1
+            this.ballSpeedX+=1.0
           }else{
-            this.ballSpeedX-=1
+            this.ballSpeedX-=1.0
           }
           this.ballSpeedY=  -Math.floor(Math.random() * 1)-1
           timer=setInterval(this.moveBallOneStep, 4)
         }
       },
       moveBallOneStep:function(){
-        console.time('a')
         this.checkHitingWalls()
         this.checkHitingTheBat()
         this.checkLosing()
         this.ballX+=this.ballSpeedX
         this.ballY+=this.ballSpeedY
-        console.timeEnd('a')
+        console.log(this.ballSpeedX)
       },
       checkHitingWalls:function(){
         if(this.ballX+this.ballSpeedX>=500-15 || this.ballX+this.ballSpeedX<=-5)
@@ -89,6 +89,8 @@ export default {
           {
             this.ballSpeedY=-this.ballSpeedY
             this.score++
+            this.ballSpeedY>0?this.ballSpeedY+=0.02:this.ballSpeedY-=0.02
+            this.ballSpeedX>0?this.ballSpeedX+=0.02:this.ballSpeedX-=0.02
           }
       },
       checkLosing:function(){
