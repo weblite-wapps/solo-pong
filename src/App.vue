@@ -116,14 +116,13 @@ export default {
   position:relative;
   width: 100%;
   height: 100%;
-  display: flex;
   border: 5px #000000 solid;
   border-bottom: 0px;
   border-radius: 15px;
   background: white;
-  padding: 0px;
-  margin: 0px;
-
+  display: flex;
+  flex-direction: row;
+  flex-grow: 5;
 }
 
 .bat{
@@ -131,7 +130,7 @@ export default {
   border: 5px;
   border-radius: 2px;
   background: black;
-  top: 485px;
+  top: 80%;
   height: 10px;
   width: 80px;
 }
@@ -146,16 +145,13 @@ export default {
 }
 
 .lost{
+  position: relative;
   font-weight: bold;
   font-size: 30px;
-  position: relative;
-  top:180px;
-  left:180px;
 }
 
 .score{
   font-size: 24px;
   color: grey;
-
 }
 </style>
