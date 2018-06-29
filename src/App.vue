@@ -12,8 +12,10 @@
     <br>
     TRY AGAIN!
   </div>
-  <div :style="{left: ballX+'px', top: ballY+'px'}"
-      :class="$style.ball">
+  <div v-for="index in ballsCount">
+    <div :style="{left: ballsX[index]+'px', top: ballsY[index]+'px'}"
+        :class="$style.ball">
+    </div>
   </div>
   <div :style="{left : batX+'px', top: batY+'px'}"
       :class="$style.bat">
@@ -31,10 +33,15 @@ export default {
         score:0,
         batX:window.innerWidth/2,
         batY:window.innerHeight-60,
-        ballX:window.innerWidth/2,
-        ballY:window.innerHeight-60,
-        ballSpeedX:0.0,
-        ballSpeedY:0.0,
+        ballsCount:[0],
+        ballsX:[window.innerWidth/2+30],
+        ballsY:[window.innerHeight-60],
+        ballsSpeedX:[0],
+        ballsSpeedY:[0],
+        // ballX:window.innerWidth/2+30,
+        // ballY:window.innerHeight-60,
+        // ballSpeedX:0.0,
+        // ballSpeedY:0.0,
         gameOnGoing:false,
         gameOver:false,
         windowHeight:window.innerHeight,
@@ -52,53 +59,75 @@ export default {
         }
       },
       startTheGame:function(){
+        console.log("startTheGame")
         if(!this.gameOnGoing){
           this.resetLocations()
           this.score=0
           this.gameOver=false
           this.gameOnGoing=true
-          this.ballSpeedX=Math.floor(Math.random() * this.maxStartingSpeedX)-this.maxStartingSpeedX/2
-          if(this.ballSpeedX>=0)
+          this.ballsSpeedX[0]=Math.floor(Math.random() * this.maxStartingSpeedX)-this.maxStartingSpeedX/2
+          if(this.ballsSpeedX[0]>=0)
           {
-            this.ballSpeedX+=this.maxStartingSpeedX/2
+            this.ballsSpeedX[0]+=this.maxStartingSpeedX/2
           }else{
-            this.ballSpeedX-=this.maxStartingSpeedX/2
+            this.ballsSpeedX[0]-=this.maxStartingSpeedX/2
           }
-          this.ballSpeedY=  -Math.floor(Math.random() * this.maxStartingSpeedY/2)-this.maxStartingSpeedY/2
-          timer=setInterval(this.moveBallOneStep, 4)
+          this.ballsSpeedY[0]=  -Math.floor(Math.random() * this.maxStartingSpeedY/2)-this.maxStartingSpeedY/2
+          timer=setInterval(this.moveBallsOneStep, 4)
         }
       },
-      moveBallOneStep:function(){
-        this.checkLosing()
-        this.checkHitingWalls()
-        this.checkHitingTheBat()
-        this.ballX+=this.ballSpeedX
-        this.ballY+=this.ballSpeedY
-      },
-      checkHitingWalls:function(){
-        if(this.ballX>=this.windowWidth-20 || this.ballX<=0)
+      moveBallsOneStep:function(){
+        console.log("moveBallsOneStep")
+        for(var i=0;i<this.ballsCount.length;i++)
         {
-          this.ballSpeedX=-this.ballSpeedX
-        }
-        if(this.ballY<=-28)
-        {
-          this.ballSpeedY=-this.ballSpeedY
+          this.checkLosing(i)
+          this.checkHitingWalls(i)
+          this.checkHitingTheBat(i)
+          this.ballsX[i]+=this.ballsSpeedX[i]
+          this.ballsY[i]+=this.ballsSpeedY[i]
         }
       },
-      checkHitingTheBat:function(){
-        if(this.ballX<=this.batX+60
-          && this.ballX>=this.batX
-          && this.ballY>=this.batY+2
-          && this.ballSpeedY>0)
+      checkHitingWalls:function(i){
+        console.log("checkHitingWalls")
+        if(this.ballsX[i]>=this.windowWidth-20 || this.ballsX[i]<=0)
+        {
+          this.ballsSpeedX[i]=-this.ballsSpeedX[i]
+        }
+        if(this.ballsY[i]<=-28)
+        {
+          this.ballsSpeedY[i]=-this.ballsSpeedY[i]
+        }
+      },
+      checkHitingTheBat:function(i){
+        console.log("checkHitingTheBat")
+        if(this.ballsX[i]<=this.batX+60
+          && this.ballsX[i]>=this.batX
+          && this.ballsY[i]>=this.batY+2
+          && this.ballsSpeedY[i]>0)
           {
-            this.ballSpeedY=-this.ballSpeedY
+            this.ballsSpeedY[i]=-this.ballsSpeedY[i]
             this.score++
-            this.ballSpeedY>0?this.ballSpeedY+=0.02:this.ballSpeedY-=0.02
-            this.ballSpeedX>0?this.ballSpeedX+=0.02:this.ballSpeedX-=0.02
+            this.ballsSpeedY[i]>0?this.ballsSpeedY[i]+=0.00001*this.windowHeight:this.ballsSpeedY[i]-=0.00001*this.windowHeight
+            this.ballsSpeedX[i]>0?this.ballsSpeedX[i]+=0.00001*this.windowWidth:this.ballsSpeedX[i]-=0.00001*this.windowWidth
+            this.ballsX.push(this.batX+30)
+            this.ballsY.push(this.windowHeight-60)
+            if(this.score!==0 && this.score%5===0)
+            {
+              this.ballsCount.push(this.ballsCount.length)
+              this.ballsSpeedX.push(Math.floor(Math.random() * this.maxStartingSpeedX)-this.maxStartingSpeedX/2)
+              if(this.ballsSpeedX[this.ballsSpeedX.length-1]>=0)
+              {
+                this.ballsSpeedX[this.ballsSpeedX.length-1]+=this.maxStartingSpeedX/2
+              }else{
+                this.ballsSpeedX[this.ballsSpeedX.length-1]-=this.maxStartingSpeedX/2
+              }
+              this.ballsSpeedY.push(-Math.floor(Math.random() * this.maxStartingSpeedY/2)-this.maxStartingSpeedY/2)
+            }
           }
       },
-      checkLosing:function(){
-        if(this.ballY+30>=this.windowHeight)
+      checkLosing:function(i){
+        console.log("checkLosing")
+        if(this.ballsY[i]+30>=this.windowHeight)
         {
           clearInterval(timer)
           this.resetLocations()
@@ -109,9 +138,16 @@ export default {
       resetLocations:function(){
         this.windowHeight=window.innerHeight
         this.windowWidth=window.innerWidth
-        this.ballX=this.windowWidth/2
-        this.ballY=this.windowHeight-60
         this.batX=this.windowWidth/2
+        this.ballsCount=[0]
+        this.ballsX=[]
+        this.ballsY=[]
+        this.ballsSpeedX=[]
+        this.ballsSpeedY=[]
+        this.ballsX.push(this.windowWidth/2+30)
+        this.ballsY.push(this.windowHeight-60)
+        this.ballsSpeedY.push(0)
+        this.ballsSpeedX.push(0)
       },
     },
 }
@@ -147,7 +183,7 @@ export default {
 }
 
 .lost{
-  position: relative;
+  position: absolute;
   font-weight: bold;
   font-size: 30px;
 }
