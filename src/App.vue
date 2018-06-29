@@ -14,7 +14,8 @@
   </div>
   <div v-for="index in ballsCount">
     <div :style="{left: ballsX[index]+'px', top: ballsY[index]+'px'}"
-        :class="$style.ball">
+        :class="$style.ball"
+        >
     </div>
   </div>
   <div :style="{left : batX+'px', top: batY+'px'}"
@@ -38,10 +39,6 @@ export default {
         ballsY:[window.innerHeight-60],
         ballsSpeedX:[0],
         ballsSpeedY:[0],
-        // ballX:window.innerWidth/2+30,
-        // ballY:window.innerHeight-60,
-        // ballSpeedX:0.0,
-        // ballSpeedY:0.0,
         gameOnGoing:false,
         gameOver:false,
         windowHeight:window.innerHeight,
@@ -59,7 +56,6 @@ export default {
         }
       },
       startTheGame:function(){
-        console.log("startTheGame")
         if(!this.gameOnGoing){
           this.resetLocations()
           this.score=0
@@ -73,11 +69,12 @@ export default {
             this.ballsSpeedX[0]-=this.maxStartingSpeedX/2
           }
           this.ballsSpeedY[0]=  -Math.floor(Math.random() * this.maxStartingSpeedY/2)-this.maxStartingSpeedY/2
-          timer=setInterval(this.moveBallsOneStep, 4)
+          timer=setInterval(this.moveBallsOneStep,4)
         }
       },
       moveBallsOneStep:function(){
-        console.log("moveBallsOneStep")
+        this.score++
+        this.score--
         for(var i=0;i<this.ballsCount.length;i++)
         {
           this.checkLosing(i)
@@ -88,7 +85,6 @@ export default {
         }
       },
       checkHitingWalls:function(i){
-        console.log("checkHitingWalls")
         if(this.ballsX[i]>=this.windowWidth-20 || this.ballsX[i]<=0)
         {
           this.ballsSpeedX[i]=-this.ballsSpeedX[i]
@@ -99,7 +95,6 @@ export default {
         }
       },
       checkHitingTheBat:function(i){
-        console.log("checkHitingTheBat")
         if(this.ballsX[i]<=this.batX+60
           && this.ballsX[i]>=this.batX
           && this.ballsY[i]>=this.batY+2
@@ -110,7 +105,7 @@ export default {
             this.ballsSpeedY[i]>0?this.ballsSpeedY[i]+=0.00001*this.windowHeight:this.ballsSpeedY[i]-=0.00001*this.windowHeight
             this.ballsSpeedX[i]>0?this.ballsSpeedX[i]+=0.00001*this.windowWidth:this.ballsSpeedX[i]-=0.00001*this.windowWidth
             this.ballsX.push(this.batX+30)
-            this.ballsY.push(this.windowHeight-60)
+            this.ballsY.push(this.windowHeight-80)
             if(this.score!==0 && this.score%5===0)
             {
               this.ballsCount.push(this.ballsCount.length)
@@ -126,7 +121,6 @@ export default {
           }
       },
       checkLosing:function(i){
-        console.log("checkLosing")
         if(this.ballsY[i]+30>=this.windowHeight)
         {
           clearInterval(timer)
