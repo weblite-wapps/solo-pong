@@ -15,7 +15,7 @@
   <div :style="{left: ballX+'px', top: ballY+'px'}"
       :class="$style.ball">
   </div>
-  <div :style="{left : batX+'px'}"
+  <div :style="{left : batX+'px', top: batY+'px'}"
       :class="$style.bat">
   </div>
 </div>
@@ -29,26 +29,29 @@ export default {
     data(){
       return{
         score:0,
-        batX:210,
-        batY:485,
-        ballX:240,
-        ballY:465,
+        batX:window.innerWidth/2,
+        batY:window.innerHeight-60,
+        ballX:window.innerWidth/2,
+        ballY:window.innerHeight-60,
         ballSpeedX:0.0,
         ballSpeedY:0.0,
         gameOnGoing:false,
         gameOver:false,
+        windowHeight:window.innerHeight,
+        windowWidth:window.innerWidth,
       }
     },
 
     methods:{
       batPosition:function(event){
-        if(event.clientX<500 && this.gameOnGoing===true)
+        if(event.clientX<this.windowWidth && this.gameOnGoing===true)
         {
           this.batX=event.clientX-40
         }
       },
       startTheGame:function(){
         if(!this.gameOnGoing){
+          this.resetLocations()
           this.score=0
           this.gameOver=false
           this.gameOnGoing=true
@@ -69,10 +72,9 @@ export default {
         this.checkLosing()
         this.ballX+=this.ballSpeedX
         this.ballY+=this.ballSpeedY
-        console.log(this.ballSpeedX)
       },
       checkHitingWalls:function(){
-        if(this.ballX+this.ballSpeedX>=500-15 || this.ballX+this.ballSpeedX<=-5)
+        if(this.ballX+this.ballSpeedX>=this.windowWidth || this.ballX+this.ballSpeedX<=-5)
         {
           this.ballSpeedX=-this.ballSpeedX
         }
@@ -94,7 +96,7 @@ export default {
           }
       },
       checkLosing:function(){
-        if(this.ballY>=500)
+        if(this.ballY>=this.windowHeight)
         {
           clearInterval(timer)
           this.resetLocations()
@@ -103,9 +105,11 @@ export default {
         }
       },
       resetLocations:function(){
-        this.ballX=240
-        this.ballY=465
-        this.batX=210
+        this.windowHeight=window.innerHeight
+        this.windowWidth=window.innerWidth
+        this.ballX=this.windowWidth/2
+        this.ballY=this.windowHeight
+        this.batX=this.windowWidth/2
       },
     },
 }
@@ -113,16 +117,14 @@ export default {
 
 <style module>
 .root {
-  position:relative;
+  position:absolute;
   width: 100%;
   height: 100%;
   border: 5px #000000 solid;
   border-bottom: 0px;
   border-radius: 15px;
   background: white;
-  display: flex;
-  flex-direction: row;
-  flex-grow: 5;
+
 }
 
 .bat{
@@ -130,7 +132,6 @@ export default {
   border: 5px;
   border-radius: 2px;
   background: black;
-  top: 80%;
   height: 10px;
   width: 80px;
 }
