@@ -28,11 +28,14 @@
 </template>
 
 <script>
+import Vue from 'vue'
 var timer
 export default {
     name: 'app',
     data(){
       return{
+        highScores:[],
+        userHighScore:0,
         score:0,
         borderRadius:(window.innerWidth+window.innerHeight)/150,
         textX:(window.innerWidth+window.innerHeight)/150,
@@ -76,15 +79,13 @@ export default {
         }
       },
       moveBallsOneStep:function(){
-        this.score++
-        this.score--
         for(var i=0;i<this.ballsCount.length;i++)
         {
           this.checkLosing(i)
           this.checkHitingWalls(i)
           this.checkHitingTheBat(i)
-          this.ballsX[i]+=this.ballsSpeedX[i]
-          this.ballsY[i]+=this.ballsSpeedY[i]
+          Vue.set(this.ballsX, i, this.ballsX[i]+this.ballsSpeedX[i])
+          Vue.set(this.ballsY,i,this.ballsY[i]+this.ballsSpeedY[i])
         }
       },
       checkHitingWalls:function(i){
@@ -133,6 +134,22 @@ export default {
           this.resetLocations()
           this.gameOver=true
           this.gameOnGoing=false
+          if(this.score>this.userHighScore)
+          {
+            this.userHighScore=this.score
+            for(i=0;i<this.highScores.length;i++)
+            {
+              if(this.score<=this.highScores[i].score)
+              {
+
+              }
+              if(this.score>=this.highScores[i].score)
+              {
+
+              }
+
+            }
+          }
         }
       },
       resetLocations:function(){
