@@ -5,23 +5,27 @@
       @mousedown="startTheGame"
       :style="{borderWidth: borderSize+'px', borderRadius: borderRadius+'px'}"
   >
-  <div :style="{top: textY+'px', left:textX+'px',position: 'absolute'}">
-    <div :class="$style.score" :style="{fontSize: fontSize+'px'}">
+    <div v-if="!gameOver" :class="$style.score" :style="{fontSize: fontSize+'px', top: scoreY+'px', left:scoreX+'px'}">
       Score:{{score}}
     </div>
-    <div v-if="gameOver" :class="$style.lost" :style="{fontSize: fontSize+'px'}">
+    <div v-if="gameOver" :class="$style.lost" :style="{fontSize: fontSize+'px',top: lostY+'px', left:lostX+'px'}">
       YOU LOST!
       <br>
-      TRY AGAIN!
+      try again!
     </div>
-  </div>
-    <div v-for="index in ballsCount">
+    <div v-if="gameOver">
+      Score board
+      <div v-for="highScore in highScores">
+        {{highScore.name}} - {{highScore.score}}
+      </div>
+    </div>
+    <div v-if="!gameOver" v-for="index in ballsCount">
       <div :style="{left: ballsX[index]+'px', top: ballsY[index]+'px', width: ballSize+'px', height: ballSize+'px', borderRadius: borderRadius+'px'}"
           :class="$style.ball"
           >
       </div>
     </div>
-    <div :style="{left : batX+'px', top: batY+'px', width: batWidth+'px', height: batHeight+'px', borderRadius: borderRadius+'px'}"
+    <div v-if="!gameOver" :style="{left : batX+'px', top: batY+'px', width: batWidth+'px', height: batHeight+'px', borderRadius: borderRadius+'px'}"
         :class="$style.bat">
     </div>
   </div>
@@ -34,12 +38,15 @@ export default {
     name: 'app',
     data(){
       return{
-        highScores:[],
+        username:'amin',
+        highScores:[{name:'ahmad',score:80}],
         userHighScore:0,
         score:0,
         borderRadius:(window.innerWidth+window.innerHeight)/150,
-        textX:(window.innerWidth+window.innerHeight)/150,
-        textY:(window.innerWidth+window.innerHeight)/150,
+        scoreX:(window.innerWidth+window.innerHeight)/150,
+        scoreY:(window.innerWidth+window.innerHeight)/150,
+        lostX:(window.innerWidth+window.innerHeight)/150,
+        lostY:(window.innerWidth+window.innerHeight)/150,
         borderSize:(window.innerWidth+window.innerHeight)/200,
         fontSize:window.innerHeight/20,
         batX:window.innerWidth/2-window.innerWidth/7/2,
@@ -139,16 +146,27 @@ export default {
             this.userHighScore=this.score
             for(i=0;i<this.highScores.length;i++)
             {
-              if(this.score<=this.highScores[i].score)
+              if(this.highScores[i].name===this.username)
               {
+                if(this.highScores[i].score<this.userHighScore)
+                {
+                  this.highScores[i].score=this.userHighScore
+                  break
 
+                }
               }
-              if(this.score>=this.highScores[i].score)
+              if(i===this.highScores.length-1 && this.highScores.length<10)
               {
-
+                this.highScores[this.highScores.length]={name:this.username,score:this.userHighScore}
+                break
               }
-
+              if(i===this.highScores.length-1 && this.highScores[this.highScores.length-1].score<this.userHighScore)
+              {
+                this.highScores[this.highScores.length-1]={name:this.username,score:this.userHighScore}
+                break
+              }
             }
+            this.sortHighScores()
           }
         }
       },
@@ -161,6 +179,20 @@ export default {
         this.ballsY=[]
         this.ballsSpeedX=[]
         this.ballsSpeedY=[]
+      },
+      sortHighScores:function(){
+        for(var i=0;i<this.highScores.length;i++)
+        {
+          for(var j=i+1;j<this.highScores.length;j++)
+          {
+            if(this.highScores[i].score<this.highScores[j].score)
+            {
+              let swap=this.highScores[i]
+              this.highScores[i]=this.highScores[j]
+              this.highScores[j]=swap
+            }
+          }
+        }
       },
     },
 }
@@ -193,7 +225,7 @@ export default {
 }
 
 .score{
-  position: relative;
+  position: absolute;
   color: grey;
 }
 </style>
