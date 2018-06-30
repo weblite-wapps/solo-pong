@@ -104,7 +104,7 @@ export default {
             this.score++
             this.ballsSpeedY[i]>0?this.ballsSpeedY[i]+=0.00001*this.windowHeight:this.ballsSpeedY[i]-=0.00001*this.windowHeight
             this.ballsSpeedX[i]>0?this.ballsSpeedX[i]+=0.00001*this.windowWidth:this.ballsSpeedX[i]-=0.00001*this.windowWidth
-            if(this.score!==0 && this.score%5===0)
+            if(this.score!==0 && this.score%(this.ballsCount.length*(this.ballsCount.length+1)*5/2)===0)
             {
               setTimeout(this.addBall,700)
             }
