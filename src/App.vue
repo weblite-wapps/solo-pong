@@ -1,27 +1,27 @@
 <template>
-<div id="app"
-    :class="$style.root"
-    @mousemove="batPosition"
-    @mousedown="startTheGame"
->
-  <div :class="$style.score">
-    Score: {{score}}
-  </div>
-  <div v-if="gameOver" :class="$style.lost">
-    YOU LOST!
-    <br>
-    TRY AGAIN!
-  </div>
-  <div v-for="index in ballsCount">
-    <div :style="{left: ballsX[index]+'px', top: ballsY[index]+'px'}"
-        :class="$style.ball"
-        >
+  <div id="app"
+      :class="$style.root"
+      @mousemove="batPosition"
+      @mousedown="startTheGame"
+  >
+    <div :class="$style.score">
+      Score: {{score}}
+    </div>
+    <div v-if="gameOver" :class="$style.lost">
+      YOU LOST!
+      <br>
+      TRY AGAIN!
+    </div>
+    <div v-for="index in ballsCount">
+      <div :style="{left: ballsX[index]+'px', top: ballsY[index]+'px'}"
+          :class="$style.ball"
+          >
+      </div>
+    </div>
+    <div :style="{left : batX+'px', top: batY+'px'}"
+        :class="$style.bat">
     </div>
   </div>
-  <div :style="{left : batX+'px', top: batY+'px'}"
-      :class="$style.bat">
-  </div>
-</div>
 </template>
 
 
@@ -36,7 +36,7 @@ export default {
         batY:window.innerHeight-40,
         ballsCount:[0],
         ballsX:[window.innerWidth/2+30],
-        ballsY:[window.innerHeight-30],
+        ballsY:[window.innerHeight-35],
         ballsSpeedX:[0],
         ballsSpeedY:[0],
         gameOnGoing:false,
@@ -78,7 +78,7 @@ export default {
         }
       },
       checkHitingWalls:function(i){
-        if(this.ballsX[i]>=this.windowWidth-20 || this.ballsX[i]<=0)
+        if(this.ballsX[i]>=this.windowWidth-30 || this.ballsX[i]<=0)
         {
           this.ballsSpeedX[i]=-this.ballsSpeedX[i]
         }
@@ -90,7 +90,7 @@ export default {
       checkHitingTheBat:function(i){
         if(this.ballsX[i]<=this.batX+80
           && this.ballsX[i]+20>=this.batX
-          && this.ballsY[i]>=this.batY+9
+          && this.ballsY[i]>=this.batY+10
           && this.ballsSpeedY[i]>0)
           {
             this.ballsSpeedY[i]=-this.ballsSpeedY[i]
@@ -115,11 +115,9 @@ export default {
           this.ballsSpeedX[this.ballsSpeedX.length-1]-=this.maxStartingSpeedX/2
         }
         this.ballsSpeedY.push(-Math.random() * this.maxStartingSpeedY/2-this.maxStartingSpeedY/2)
-        // this.ballsCount.length>1?this.batY-=20:this.batY=this.batY
-        // console.log(this.batY)
       },
       checkLosing:function(i){
-        if(this.ballsY[i]+30>=this.windowHeight)
+        if(this.ballsY[i]>=this.windowHeight-19)
         {
           clearInterval(timer)
           this.resetLocations()
@@ -144,6 +142,7 @@ export default {
 <style module>
 .root {
   position:absolute;
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
   border: 5px #000000 solid;
@@ -177,6 +176,7 @@ export default {
 }
 
 .score{
+  position: relative;
   font-size: 24px;
   color: grey;
 }
