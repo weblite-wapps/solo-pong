@@ -8,13 +8,15 @@
     <div v-if="!gameOver" :class="$style.score" :style="{fontSize: fontSize+'px', top: scoreY+'px', left:scoreX+'px'}">
       Score:{{score}}
     </div>
-    <div v-if="gameOver" :class="$style.lost" :style="{fontSize: fontSize+'px',top: lostY+'px', left:lostX+'px'}">
+    <div v-if="gameOver" :class="$style.lost" :style="{fontSize: fontSize+'px'}">
       YOU LOST!
       <br>
       try again!
     </div>
-    <div v-if="gameOver">
-      Score board
+    <br>
+    <br>
+    <div v-if="gameOver" :class="$style.scoreboard" :style="{fontSize: fontSize+'px'}">
+      Scoreboard
       <div v-for="highScore in highScores">
         {{highScore.name}} - {{highScore.score}}
       </div>
@@ -39,14 +41,14 @@ export default {
     data(){
       return{
         username:'amin',
-        highScores:[{name:'ahmad',score:80}],
+        highScores:[{name:'ahmad',score:80}, {name: 'ali', score: 92}],
         userHighScore:0,
         score:0,
         borderRadius:(window.innerWidth+window.innerHeight)/150,
         scoreX:(window.innerWidth+window.innerHeight)/150,
         scoreY:(window.innerWidth+window.innerHeight)/150,
-        lostX:(window.innerWidth+window.innerHeight)/150,
-        lostY:(window.innerWidth+window.innerHeight)/150,
+        lostX:0,
+        lostY:window.innerHeight/20,
         borderSize:(window.innerWidth+window.innerHeight)/200,
         fontSize:window.innerHeight/20,
         batX:window.innerWidth/2-window.innerWidth/7/2,
@@ -85,15 +87,14 @@ export default {
           timer=setInterval(this.moveBallsOneStep,4)
         }
       },
-      moveBallsOneStep:function(){
-        for(var i=0;i<this.ballsCount.length;i++)
-        {
+      moveBallsOneStep:function() {
+        this.ballsCount.forEach((_, i) => {
           this.checkLosing(i)
           this.checkHitingWalls(i)
           this.checkHitingTheBat(i)
           Vue.set(this.ballsX, i, this.ballsX[i]+this.ballsSpeedX[i])
           Vue.set(this.ballsY,i,this.ballsY[i]+this.ballsSpeedY[i])
-        }
+        })
       },
       checkHitingWalls:function(i){
         if(this.ballsX[i]+this.ballSize+this.borderSize>=this.windowWidth || this.ballsX[i]<=0)
@@ -138,6 +139,7 @@ export default {
         if(this.ballsY[i]+this.ballSize>=this.batY+this.borderSize+1)
         {
           clearInterval(timer)
+          this.sortHighScores()
           this.resetLocations()
           this.gameOver=true
           this.gameOnGoing=false
@@ -181,18 +183,7 @@ export default {
         this.ballsSpeedY=[]
       },
       sortHighScores:function(){
-        for(var i=0;i<this.highScores.length;i++)
-        {
-          for(var j=i+1;j<this.highScores.length;j++)
-          {
-            if(this.highScores[i].score<this.highScores[j].score)
-            {
-              let swap=this.highScores[i]
-              this.highScores[i]=this.highScores[j]
-              this.highScores[j]=swap
-            }
-          }
-        }
+        this.highScores = this.highScores.sort((a, b) => b.score - a.score)
       },
     },
 }
@@ -222,10 +213,15 @@ export default {
 .lost{
   position: relative;
   font-weight: bold;
+  text-align: center;
 }
 
 .score{
   position: absolute;
   color: grey;
+}
+
+.scoreboard{
+  text-align: center;
 }
 </style>
