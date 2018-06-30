@@ -104,17 +104,15 @@ export default {
             this.score++
             this.ballsSpeedY[i]>0?this.ballsSpeedY[i]+=0.00001*this.windowHeight:this.ballsSpeedY[i]-=0.00001*this.windowHeight
             this.ballsSpeedX[i]>0?this.ballsSpeedX[i]+=0.00001*this.windowWidth:this.ballsSpeedX[i]-=0.00001*this.windowWidth
-            this.ballsX.push(this.batX+30)
-            this.ballsY.push(this.windowHeight-80)
             if(this.score!==0 && this.score%5===0)
             {
-              console.log("here")
               setTimeout(this.addBall,700)
             }
           }
       },
       addBall:function(){
-        console.log("there")
+        this.ballsX.push(this.batX+30)
+        this.ballsY.push(this.windowHeight-80)
         this.ballsCount.push(this.ballsCount.length)
         this.ballsSpeedX.push(Math.floor(Math.random() * this.maxStartingSpeedX)-this.maxStartingSpeedX/2)
         if(this.ballsSpeedX[this.ballsSpeedX.length-1]>=0)
