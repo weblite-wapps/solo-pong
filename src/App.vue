@@ -108,17 +108,22 @@ export default {
             this.ballsY.push(this.windowHeight-80)
             if(this.score!==0 && this.score%5===0)
             {
-              this.ballsCount.push(this.ballsCount.length)
-              this.ballsSpeedX.push(Math.floor(Math.random() * this.maxStartingSpeedX)-this.maxStartingSpeedX/2)
-              if(this.ballsSpeedX[this.ballsSpeedX.length-1]>=0)
-              {
-                this.ballsSpeedX[this.ballsSpeedX.length-1]+=this.maxStartingSpeedX/2
-              }else{
-                this.ballsSpeedX[this.ballsSpeedX.length-1]-=this.maxStartingSpeedX/2
-              }
-              this.ballsSpeedY.push(-Math.floor(Math.random() * this.maxStartingSpeedY/2)-this.maxStartingSpeedY/2)
+              console.log("here")
+              setTimeout(this.addBall,700)
             }
           }
+      },
+      addBall:function(){
+        console.log("there")
+        this.ballsCount.push(this.ballsCount.length)
+        this.ballsSpeedX.push(Math.floor(Math.random() * this.maxStartingSpeedX)-this.maxStartingSpeedX/2)
+        if(this.ballsSpeedX[this.ballsSpeedX.length-1]>=0)
+        {
+          this.ballsSpeedX[this.ballsSpeedX.length-1]+=this.maxStartingSpeedX/2
+        }else{
+          this.ballsSpeedX[this.ballsSpeedX.length-1]-=this.maxStartingSpeedX/2
+        }
+        this.ballsSpeedY.push(-Math.floor(Math.random() * this.maxStartingSpeedY/2)-this.maxStartingSpeedY/2)
       },
       checkLosing:function(i){
         if(this.ballsY[i]+30>=this.windowHeight)
