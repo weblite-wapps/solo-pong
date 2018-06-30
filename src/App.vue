@@ -61,14 +61,17 @@ export default {
           this.score=0
           this.gameOver=false
           this.gameOnGoing=true
-          this.ballsSpeedX[0]=Math.floor(Math.random() * this.maxStartingSpeedX)-this.maxStartingSpeedX/2
-          if(this.ballsSpeedX[0]>=0)
-          {
-            this.ballsSpeedX[0]+=this.maxStartingSpeedX/2
-          }else{
-            this.ballsSpeedX[0]-=this.maxStartingSpeedX/2
-          }
-          this.ballsSpeedY[0]=  -Math.floor(Math.random() * this.maxStartingSpeedY/2)-this.maxStartingSpeedY/2
+          // this.ballsX.push(this.windowWidth/2+30)
+          // this.ballsY.push(this.windowHeight-60)
+          // this.ballsSpeedX.push(Math.random() * this.maxStartingSpeedX-this.maxStartingSpeedX/2)
+          // if(this.ballsSpeedX[0]>=0)
+          // {
+          //   this.ballsSpeedX[0]+=this.maxStartingSpeedX/2
+          // }else{
+          //   this.ballsSpeedX[0]-=this.maxStartingSpeedX/2
+          // }
+          // this.ballsSpeedY.push(-Math.random() * this.maxStartingSpeedY/2-this.maxStartingSpeedY/2)
+          this.addBall()
           timer=setInterval(this.moveBallsOneStep,4)
         }
       },
@@ -111,17 +114,17 @@ export default {
           }
       },
       addBall:function(){
-        this.ballsX.push(this.batX+30)
-        this.ballsY.push(this.windowHeight-80)
+        this.ballsX.push(this.windowWidth/2+30)
+        this.ballsY.push(this.windowHeight-60)
         this.ballsCount.push(this.ballsCount.length)
-        this.ballsSpeedX.push(Math.floor(Math.random() * this.maxStartingSpeedX)-this.maxStartingSpeedX/2)
+        this.ballsSpeedX.push(Math.random() * this.maxStartingSpeedX-this.maxStartingSpeedX/2)
         if(this.ballsSpeedX[this.ballsSpeedX.length-1]>=0)
         {
           this.ballsSpeedX[this.ballsSpeedX.length-1]+=this.maxStartingSpeedX/2
         }else{
           this.ballsSpeedX[this.ballsSpeedX.length-1]-=this.maxStartingSpeedX/2
         }
-        this.ballsSpeedY.push(-Math.floor(Math.random() * this.maxStartingSpeedY/2)-this.maxStartingSpeedY/2)
+        this.ballsSpeedY.push(-Math.random() * this.maxStartingSpeedY/2-this.maxStartingSpeedY/2)
       },
       checkLosing:function(i){
         if(this.ballsY[i]+30>=this.windowHeight)
@@ -136,15 +139,11 @@ export default {
         this.windowHeight=window.innerHeight
         this.windowWidth=window.innerWidth
         this.batX=this.windowWidth/2
-        this.ballsCount=[0]
+        this.ballsCount=[]
         this.ballsX=[]
         this.ballsY=[]
         this.ballsSpeedX=[]
         this.ballsSpeedY=[]
-        this.ballsX.push(this.windowWidth/2+30)
-        this.ballsY.push(this.windowHeight-60)
-        this.ballsSpeedY.push(0)
-        this.ballsSpeedX.push(0)
       },
     },
 }
