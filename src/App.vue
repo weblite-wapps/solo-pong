@@ -3,27 +3,29 @@
       :class="$style.root"
       @mousemove="batPosition"
       @mousedown="startTheGame"
+      :style="{borderWidth: borderSize+'px', borderRadius: borderRadius+'px'}"
   >
-    <div :class="$style.score">
-      Score: {{score}}
+  <div :style="{top: textY+'px', left:textX+'px',position: 'absolute'}">
+    <div :class="$style.score" :style="{fontSize: fontSize+'px'}">
+      Score:{{score}}
     </div>
-    <div v-if="gameOver" :class="$style.lost">
+    <div v-if="gameOver" :class="$style.lost" :style="{fontSize: fontSize+'px'}">
       YOU LOST!
       <br>
       TRY AGAIN!
     </div>
+  </div>
     <div v-for="index in ballsCount">
-      <div :style="{left: ballsX[index]+'px', top: ballsY[index]+'px', width: ballSize+'px', height: ballSize+'px'}"
+      <div :style="{left: ballsX[index]+'px', top: ballsY[index]+'px', width: ballSize+'px', height: ballSize+'px', borderRadius: borderRadius+'px'}"
           :class="$style.ball"
           >
       </div>
     </div>
-    <div :style="{left : batX+'px', top: batY+'px', width: batWidth+'px', height: batHeight+'px'}"
+    <div :style="{left : batX+'px', top: batY+'px', width: batWidth+'px', height: batHeight+'px', borderRadius: borderRadius+'px'}"
         :class="$style.bat">
     </div>
   </div>
 </template>
-
 
 <script>
 var timer
@@ -32,14 +34,19 @@ export default {
     data(){
       return{
         score:0,
-        batX:window.innerWidth/2,
-        batY:window.innerHeight-40,
+        borderRadius:(window.innerWidth+window.innerHeight)/150,
+        textX:(window.innerWidth+window.innerHeight)/150,
+        textY:(window.innerWidth+window.innerHeight)/150,
+        borderSize:(window.innerWidth+window.innerHeight)/200,
+        fontSize:window.innerHeight/20,
+        batX:window.innerWidth/2-window.innerWidth/7/2,
+        batY:window.innerHeight-window.innerHeight/30,
         batWidth:window.innerWidth/7,
         batHeight:window.innerHeight/50,
         ballsCount:[0],
         ballSize:(window.innerWidth+window.innerHeight)/100,
-        ballsX:[window.innerWidth/2+30],
-        ballsY:[window.innerHeight-35],
+        ballsX:[window.innerWidth/2-(window.innerWidth+window.innerHeight)/200],
+        ballsY:[window.innerHeight-window.innerHeight/30-(window.innerWidth+window.innerHeight)/100],
         ballsSpeedX:[0],
         ballsSpeedY:[0],
         gameOnGoing:false,
@@ -55,7 +62,7 @@ export default {
       batPosition:function(event){
         if(this.gameOnGoing===true)
         {
-          this.batX=event.clientX-40
+          this.batX=event.clientX-this.batWidth/2
         }
       },
       startTheGame:function(){
@@ -81,7 +88,7 @@ export default {
         }
       },
       checkHitingWalls:function(i){
-        if(this.ballsX[i]>=this.windowWidth-30 || this.ballsX[i]<=0)
+        if(this.ballsX[i]+this.ballSize>=this.windowWidth || this.ballsX[i]<=0)
         {
           this.ballsSpeedX[i]=-this.ballsSpeedX[i]
         }
@@ -91,9 +98,9 @@ export default {
         }
       },
       checkHitingTheBat:function(i){
-        if(this.ballsX[i]<=this.batX+80
-          && this.ballsX[i]+20>=this.batX
-          && this.ballsY[i]>=this.batY+10
+        if(this.ballsX[i]<=this.batX+this.batWidth
+          && this.ballsX[i]+this.ballSize>=this.batX
+          && this.ballsY[i]+this.ballSize-35>=this.batY
           && this.ballsSpeedY[i]>0)
           {
             this.ballsSpeedY[i]=-this.ballsSpeedY[i]
@@ -107,8 +114,8 @@ export default {
           }
       },
       addBall:function(){
-        this.ballsX.push(this.windowWidth/2+30)
-        this.ballsY.push(this.windowHeight-35)
+        this.ballsX.push(this.batX+this.batWidth/2-this.ballSize/2)
+        this.ballsY.push(window.innerHeight-15-(window.innerWidth+window.innerHeight)/100)
         this.ballsCount.push(this.ballsCount.length)
         this.ballsSpeedX.push(Math.random() * this.maxStartingSpeedX-this.maxStartingSpeedX/2)
         if(this.ballsSpeedX[this.ballsSpeedX.length-1]>=0)
@@ -120,7 +127,7 @@ export default {
         this.ballsSpeedY.push(-Math.random() * this.maxStartingSpeedY/2-this.maxStartingSpeedY/2)
       },
       checkLosing:function(i){
-        if(this.ballsY[i]>=this.windowHeight-19)
+        if(this.ballsY[i]+this.ballSize-36>=this.batY)
         {
           clearInterval(timer)
           this.resetLocations()
@@ -131,7 +138,7 @@ export default {
       resetLocations:function(){
         this.windowHeight=window.innerHeight
         this.windowWidth=window.innerWidth
-        this.batX=this.windowWidth/2
+        this.batX=window.innerWidth/2-window.innerWidth/7/2
         this.ballsCount=[]
         this.ballsX=[]
         this.ballsY=[]
@@ -148,35 +155,28 @@ export default {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  border: 5px #000000 solid;
+  border: black solid;
   border-bottom: 0px;
-  border-radius: 15px;
-  background: white;
+  border-color: black;
 }
 
 .bat{
-  position: relative;
-  border: 5px;
-  border-radius: 2px;
+  position: absolute;
   background: black;
 }
 
 .ball{
   position: absolute;
-  border: 5px;
-  border-radius: 10px;
   background: black;
 }
 
 .lost{
-  position: absolute;
+  position: relative;
   font-weight: bold;
-  font-size: 30px;
 }
 
 .score{
   position: relative;
-  font-size: 24px;
   color: grey;
 }
 </style>
