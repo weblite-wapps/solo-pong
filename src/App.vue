@@ -13,12 +13,12 @@
       TRY AGAIN!
     </div>
     <div v-for="index in ballsCount">
-      <div :style="{left: ballsX[index]+'px', top: ballsY[index]+'px'}"
+      <div :style="{left: ballsX[index]+'px', top: ballsY[index]+'px', width: ballSize+'px', height: ballSize+'px'}"
           :class="$style.ball"
           >
       </div>
     </div>
-    <div :style="{left : batX+'px', top: batY+'px'}"
+    <div :style="{left : batX+'px', top: batY+'px', width: batWidth+'px', height: batHeight+'px'}"
         :class="$style.bat">
     </div>
   </div>
@@ -34,7 +34,10 @@ export default {
         score:0,
         batX:window.innerWidth/2,
         batY:window.innerHeight-40,
+        batWidth:window.innerWidth/7,
+        batHeight:window.innerHeight/50,
         ballsCount:[0],
+        ballSize:(window.innerWidth+window.innerHeight)/100,
         ballsX:[window.innerWidth/2+30],
         ballsY:[window.innerHeight-35],
         ballsSpeedX:[0],
@@ -50,7 +53,7 @@ export default {
 
     methods:{
       batPosition:function(event){
-        if(event.clientX+40<this.windowWidth && event.clientX>30 && this.gameOnGoing===true)
+        if(this.gameOnGoing===true)
         {
           this.batX=event.clientX-40
         }
@@ -156,8 +159,6 @@ export default {
   border: 5px;
   border-radius: 2px;
   background: black;
-  height: 10px;
-  width: 80px;
 }
 
 .ball{
@@ -165,8 +166,6 @@ export default {
   border: 5px;
   border-radius: 10px;
   background: black;
-  height: 20px;
-  width: 20px;
 }
 
 .lost{
