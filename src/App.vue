@@ -5,30 +5,48 @@
       @mousedown="startTheGame"
       :style="{borderWidth: borderSize+'px', borderRadius: borderRadius+'px'}"
   >
-    <div v-if="!gameOver" :class="$style.score" :style="{fontSize: fontSize+'px', top: scoreY+'px', left:scoreX+'px'}">
+    <div v-if="!gameOver"
+      :class="$style.score"
+      :style="{fontSize: fontSize+'px', top: scoreY+'px', left:scoreX+'px'}"
+      >
       Score:{{score}}
     </div>
-    <div v-if="gameOver" :class="$style.lost" :style="{fontSize: fontSize+'px'}">
+    <div v-if="gameOver"
+      :class="$style.lost"
+      :style="{fontSize: fontSize+'px'}"
+      >
       YOU LOST!
       <br>
       try again!
     </div>
     <br>
     <br>
-    <div v-if="gameOver" :class="$style.scoreboard" :style="{fontSize: fontSize+'px'}">
-      Scoreboard
+    <div v-if="gameOver"
+      :class="$style.scoreboard"
+      :style="{fontSize: fontSize+'px'}"
+      >
+      •• Scoreboard ••
       <div v-for="highScore in highScores">
         {{highScore.name}} - {{highScore.score}}
       </div>
     </div>
     <div v-if="!gameOver" v-for="index in ballsCount">
-      <div :style="{left: ballsX[index]+'px', top: ballsY[index]+'px', width: ballSize+'px', height: ballSize+'px', borderRadius: borderRadius+'px'}"
+      <div :style="{left: ballsX[index]+'px',
+                    top: ballsY[index]+'px',
+                    width: ballSize+'px',
+                    height: ballSize+'px',
+                    borderRadius: borderRadius+'px'}"
           :class="$style.ball"
           >
       </div>
     </div>
-    <div v-if="!gameOver" :style="{left : batX+'px', top: batY+'px', width: batWidth+'px', height: batHeight+'px', borderRadius: borderRadius+'px'}"
-        :class="$style.bat">
+    <div v-if="!gameOver"
+      :style="{left : batX+'px',
+               top: batY+'px',
+               width: batWidth+'px',
+               height: batHeight+'px',
+               borderRadius: borderRadius+'px'}"
+      :class="$style.bat">
     </div>
   </div>
 </template>
@@ -114,8 +132,19 @@ export default {
           {
             this.ballsSpeedY[i]=-this.ballsSpeedY[i]
             this.score++
-            this.ballsSpeedY[i]>0?this.ballsSpeedY[i]+=0.00001*this.windowHeight:this.ballsSpeedY[i]-=0.00001*this.windowHeight
-            this.ballsSpeedX[i]>0?this.ballsSpeedX[i]+=0.00001*this.windowWidth:this.ballsSpeedX[i]-=0.00001*this.windowWidth
+            if(this.ballsSpeedY[i]>0)
+            {
+              this.ballsSpeedY[i]+=0.00001*this.windowHeight
+            }
+            else {
+                this.ballsSpeedY[i]-=0.00001*this.windowHeight
+            }
+            if(this.ballsSpeedX[i]>0)
+            {
+              this.ballsSpeedX[i]+=0.00001*this.windowWidth
+            }else{
+              this.ballsSpeedX[i]-=0.00001*this.windowWidth
+            }
             if(this.score!==0 && this.score%(this.ballsCount.length*(this.ballsCount.length+1)*5/2)===0)
             {
               setTimeout(this.addBall,700)
@@ -162,7 +191,8 @@ export default {
                 this.highScores[this.highScores.length]={name:this.username,score:this.userHighScore}
                 break
               }
-              if(i===this.highScores.length-1 && this.highScores[this.highScores.length-1].score<this.userHighScore)
+              if(i===this.highScores.length-1
+                  && this.highScores[this.highScores.length-1].score<this.userHighScore)
               {
                 this.highScores[this.highScores.length-1]={name:this.username,score:this.userHighScore}
                 break
