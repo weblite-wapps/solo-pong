@@ -58,8 +58,8 @@ export default {
     name: 'app',
     data(){
       return{
-        username:'amin',
-        highScores:[{name:'ahmad',score:80}, {name: 'ali', score: 92}],
+        username:'',
+        highScores:[],
         userHighScore:0,
         score:0,
         borderRadius:(window.innerWidth+window.innerHeight)/150,
