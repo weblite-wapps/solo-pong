@@ -88,7 +88,7 @@ export default {
         }
       },
       checkHitingWalls:function(i){
-        if(this.ballsX[i]+this.ballSize>=this.windowWidth || this.ballsX[i]<=0)
+        if(this.ballsX[i]+this.ballSize+this.borderSize>=this.windowWidth || this.ballsX[i]<=0)
         {
           this.ballsSpeedX[i]=-this.ballsSpeedX[i]
         }
@@ -100,7 +100,7 @@ export default {
       checkHitingTheBat:function(i){
         if(this.ballsX[i]<=this.batX+this.batWidth
           && this.ballsX[i]+this.ballSize>=this.batX
-          && this.ballsY[i]+this.ballSize-35>=this.batY
+          && this.ballsY[i]+this.ballSize>=this.batY+this.borderSize
           && this.ballsSpeedY[i]>0)
           {
             this.ballsSpeedY[i]=-this.ballsSpeedY[i]
@@ -115,7 +115,7 @@ export default {
       },
       addBall:function(){
         this.ballsX.push(this.batX+this.batWidth/2-this.ballSize/2)
-        this.ballsY.push(window.innerHeight-15-(window.innerWidth+window.innerHeight)/100)
+        this.ballsY.push(window.innerHeight-window.innerHeight/30-(window.innerWidth+window.innerHeight)/100)
         this.ballsCount.push(this.ballsCount.length)
         this.ballsSpeedX.push(Math.random() * this.maxStartingSpeedX-this.maxStartingSpeedX/2)
         if(this.ballsSpeedX[this.ballsSpeedX.length-1]>=0)
@@ -127,7 +127,7 @@ export default {
         this.ballsSpeedY.push(-Math.random() * this.maxStartingSpeedY/2-this.maxStartingSpeedY/2)
       },
       checkLosing:function(i){
-        if(this.ballsY[i]+this.ballSize-36>=this.batY)
+        if(this.ballsY[i]+this.ballSize>=this.batY+this.borderSize+1)
         {
           clearInterval(timer)
           this.resetLocations()
