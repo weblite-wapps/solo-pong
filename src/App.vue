@@ -33,10 +33,10 @@ export default {
       return{
         score:0,
         batX:window.innerWidth/2,
-        batY:window.innerHeight-60,
+        batY:window.innerHeight-40,
         ballsCount:[0],
         ballsX:[window.innerWidth/2+30],
-        ballsY:[window.innerHeight-60],
+        ballsY:[window.innerHeight-30],
         ballsSpeedX:[0],
         ballsSpeedY:[0],
         gameOnGoing:false,
@@ -61,16 +61,6 @@ export default {
           this.score=0
           this.gameOver=false
           this.gameOnGoing=true
-          // this.ballsX.push(this.windowWidth/2+30)
-          // this.ballsY.push(this.windowHeight-60)
-          // this.ballsSpeedX.push(Math.random() * this.maxStartingSpeedX-this.maxStartingSpeedX/2)
-          // if(this.ballsSpeedX[0]>=0)
-          // {
-          //   this.ballsSpeedX[0]+=this.maxStartingSpeedX/2
-          // }else{
-          //   this.ballsSpeedX[0]-=this.maxStartingSpeedX/2
-          // }
-          // this.ballsSpeedY.push(-Math.random() * this.maxStartingSpeedY/2-this.maxStartingSpeedY/2)
           this.addBall()
           timer=setInterval(this.moveBallsOneStep,4)
         }
@@ -92,15 +82,15 @@ export default {
         {
           this.ballsSpeedX[i]=-this.ballsSpeedX[i]
         }
-        if(this.ballsY[i]<=-28)
+        if(this.ballsY[i]<=0)
         {
           this.ballsSpeedY[i]=-this.ballsSpeedY[i]
         }
       },
       checkHitingTheBat:function(i){
-        if(this.ballsX[i]<=this.batX+60
-          && this.ballsX[i]>=this.batX
-          && this.ballsY[i]>=this.batY+2
+        if(this.ballsX[i]<=this.batX+80
+          && this.ballsX[i]+20>=this.batX
+          && this.ballsY[i]>=this.batY+9
           && this.ballsSpeedY[i]>0)
           {
             this.ballsSpeedY[i]=-this.ballsSpeedY[i]
@@ -115,7 +105,7 @@ export default {
       },
       addBall:function(){
         this.ballsX.push(this.windowWidth/2+30)
-        this.ballsY.push(this.windowHeight-60)
+        this.ballsY.push(this.windowHeight-35)
         this.ballsCount.push(this.ballsCount.length)
         this.ballsSpeedX.push(Math.random() * this.maxStartingSpeedX-this.maxStartingSpeedX/2)
         if(this.ballsSpeedX[this.ballsSpeedX.length-1]>=0)
@@ -125,6 +115,8 @@ export default {
           this.ballsSpeedX[this.ballsSpeedX.length-1]-=this.maxStartingSpeedX/2
         }
         this.ballsSpeedY.push(-Math.random() * this.maxStartingSpeedY/2-this.maxStartingSpeedY/2)
+        // this.ballsCount.length>1?this.batY-=20:this.batY=this.batY
+        // console.log(this.batY)
       },
       checkLosing:function(i){
         if(this.ballsY[i]+30>=this.windowHeight)
@@ -170,7 +162,7 @@ export default {
 }
 
 .ball{
-  position: relative;
+  position: absolute;
   border: 5px;
   border-radius: 10px;
   background: black;
