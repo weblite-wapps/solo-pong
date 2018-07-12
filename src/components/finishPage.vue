@@ -1,26 +1,37 @@
 <template>
   <div :class="$style['finishRoot']">
     <p :class="$style.fake">.</p>
+
     <!-- game score -->
     <div :class="$style['gameInfo']">
       <p :class="$style.pTag"> GAME OVER !! </P>
       <P :class="$style.pTag"> SCORE : {{score}}</P>
     </div>
+
     <!-- post to liderBoard -->
-    <button type="button" name="button"  :class="$style.postToLiderboard"@click="postToLiderboardClicked">post to liderboard</button>
+    <button
+      type="button"
+      name="button"
+      :class="$style.postToLiderboard"
+      @click="postToLiderboardClicked"
+    >
+      post to liderboard
+    </button>
+
     <!-- replay button -->
     <div :class="$style.logo">
       <costomButton
         :class="$style['startLogo']"
         @click="gamePageClicked"
         type="replay"
-        />
+      />
+
       <!-- home button -->
       <costomButton
         :class="$style['homeLogo']"
         @click="homeButtonClicked"
         type="home"
-        />
+      />
     </div>
   </div>
 </template>
@@ -43,18 +54,11 @@
     },
 
     methods: {
-      gamePageClicked(){
-        this.$emit('gamePageClicked')
-      },
+      gamePageClicked() { this.$emit('gamePageClicked') },
 
-      postToLiderboardClicked(){
-        this.$emit('postToLiderboardClicked', this.score)
-      },
+      postToLiderboardClicked() { this.$emit('postToLiderboardClicked', this.score) },
 
-      homeButtonClicked() {
-        console.log("asdfasdfsadfasdf");
-        this.$emit('homePageClicked')
-      }
+      homeButtonClicked() { this.$emit('homePageClicked') },
     }
   }
 

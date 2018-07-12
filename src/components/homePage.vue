@@ -4,7 +4,7 @@
     <div :class="$style['liderBoardPlace']">
       <ul>
         <li v-for="(lider, index) in liderBoard" :key="index">
-            {{lider.name + "  " +lider.score}}
+            {{ lider.name + "  " + lider.score }}
         </li>
       </ul>
     </div>
