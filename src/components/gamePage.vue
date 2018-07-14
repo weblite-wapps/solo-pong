@@ -2,13 +2,11 @@
   <div
     :class="$style.root"
     @mousedown.once="startGame"
-    @keyup.left="c"
     @mousemove="changeBatPosition"
-    >
+  >
     <!-- score and highScore and gameStopButton-->
     <div :class="$style.scoreTape">
-      <div :class="$style.pTag"    @keyup.left="c">
-
+      <div :class="$style.pTag" @keyup.left="c">
         <p >RECORD : {{highScore}}</p>
         <p >SCORE : {{score}}</p>
       </div>
@@ -80,17 +78,13 @@
         this.gameOnGoing = true
         this.ballSpeed.x = .5 + Math.random();
         this.ballSpeed.y = -1
-        var temp = setInterval(()=>{
-          if(this.gameOnGoing){
-            this.gameEcosystem()
-          }}, 4)
+        var temp = setInterval(() => { if(this.gameOnGoing) this.gameEcosystem() }, 4)
       },
 
       gameEcosystem(){
         this.findBallPosition()
         this.checkHitingWalls()
         this.checkHitingBat()
-
       },
 
       findBallPosition(){
@@ -99,21 +93,16 @@
       },
 
       checkHitingWalls(){
-        if(this.ballPosition.x > 380 || this.ballPosition.x < 0){
-          this.ballSpeed.x = -this.ballSpeed.x
-        }
-        if(this.ballPosition.y < 0){
-          this.ballSpeed.y = -this.ballSpeed.y
-        }
+        if(this.ballPosition.x > 380 || this.ballPosition.x < 0) this.ballSpeed.x = -this.ballSpeed.x
+        if(this.ballPosition.y < 0) this.ballSpeed.y = -this.ballSpeed.y
       },
 
       checkHitingBat(){
         if(this.ballPosition.y > 370){
-          if(this.ballPosition.x < 50 + this.batPosition.x && this.ballPosition.x > this.batPosition.x - 10){
+          if(this.ballPosition.x < 50 + this.batPosition.x && this.ballPosition.x > this.batPosition.x - 10) {
             this.ballSpeed.y = -this.ballSpeed.y
             this.score++
-          }
-          else{
+          } else {
             this.gameOnGoing = false
             this.$emit('gameFinished', this.score)
           }
@@ -122,22 +111,13 @@
 
       changeBatPosition:function(event){
         if(this.gameOnGoing){
-            if(event.clientX - (window.innerWidth - 400)/2 <340)
-              this.batPosition.x =  event.clientX - (window.innerWidth - 400)/2
-            else{
-              this.batPosition.x = 340
-            }
+          if(event.clientX - (window.innerWidth - 400)/2 <340)
+            this.batPosition.x =  event.clientX - (window.innerWidth - 400)/2
+          else this.batPosition.x = 340
         }
       },
 
-      pauseClicked(){
-        this.gameOnGoing = !this.gameOnGoing
-      },
-
-      c(){
-        console.log("left");
-      }
-
+      pauseClicked() { this.gameOnGoing = !this.gameOnGoing },
     }
   }
 
