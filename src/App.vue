@@ -29,8 +29,6 @@
   import finishPage from "./components/finishPage.vue"
   import gamePage from "./components/gamePage.vue"
 
-  import bus from "./helper/function/bus.js"
-
   export default {
     name: 'App',
 

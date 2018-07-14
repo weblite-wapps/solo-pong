@@ -99,8 +99,11 @@
 
       checkHitingBat(){
         if(this.ballPosition.y > 370){
-          if(this.ballPosition.x < 50 + this.batPosition.x && this.ballPosition.x > this.batPosition.x - 10) {
+          if(this.ballPosition.x < 55 + this.batPosition.x && this.ballPosition.x > this.batPosition.x - 15) {
             this.ballSpeed.y = -this.ballSpeed.y
+            if(this.ballPosition.x > 45 + this.batPosition.x || this.ballPosition.x < this.batPosition.x - 5){
+              this.ballSpeed.x += (.5 - Math.random())
+            }
             this.score++
           } else {
             this.gameOnGoing = false
