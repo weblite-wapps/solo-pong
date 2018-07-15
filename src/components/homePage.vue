@@ -1,9 +1,9 @@
 <template>
   <div :class="$style['homeRoot']">
     <p :class="$style.fake">.</p>
-    <div :class="$style['liderBoardPlace']">
+    <div :class="$style['leaderBoardPlace']">
       <ul>
-        <li v-for="(lider, index) in liderBoard" :key="index">
+        <li v-for="(lider, index) in leaderBoard" :key="index">
             {{ lider.name + "  " + lider.score }}
         </li>
       </ul>
@@ -29,7 +29,7 @@
     },
 
     props: {
-      liderBoard: {
+      leaderBoard: {
         type: Array
       },
       pageStage: {
@@ -53,7 +53,7 @@
     background-color: rgb(249, 249, 249);
   }
 
-  .liderBoardPlace {
+  .leaderBoardPlace {
     width: 50%;
     height: 50%;
     background-color: rgb(190, 190, 203);

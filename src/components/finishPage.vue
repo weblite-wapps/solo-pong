@@ -8,14 +8,14 @@
       <P :class="$style.pTag"> SCORE : {{score}}</P>
     </div>
 
-    <!-- post to liderBoard -->
+    <!-- post to leaderBoard -->
     <button
       type="button"
       name="button"
-      :class="$style.postToLiderboard"
-      @click="postToLiderboardClicked"
+      :class="$style.postToleaderBoard"
+      @click="postToleaderBoardClicked"
     >
-      post to liderboard
+      post to leaderBoard
     </button>
 
     <!-- replay button -->
@@ -56,7 +56,7 @@
     methods: {
       gamePageClicked() { this.$emit('gamePageClicked') },
 
-      postToLiderboardClicked() { this.$emit('postToLiderboardClicked', this.score) },
+      postToleaderBoardClicked() { this.$emit('postToleaderBoardClicked', this.score) },
 
       homeButtonClicked() { this.$emit('homePageClicked') },
     }
@@ -104,13 +104,13 @@
     border-radius: 3px
   }
 
-  .postToLiderboard {
+  .postToleaderBoard {
     width: 50%;
     margin-left: 100px;
     margin-bottom: 10px;
   }
 
-  .postToLiderboard:hover{
+  .postToleaderBoard:hover{
     box-shadow: 0 0 5px #333;
   }
 </style>

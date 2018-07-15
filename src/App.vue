@@ -2,13 +2,13 @@
   <div :class="$style.root">
     <homePage
       v-if="homepageShow"
-      :liderBoard="liderBoard"
+      :leaderBoard="leaderBoard"
       @gamePageClicked="setGamePage"
     />
 
     <gamePage
       v-if="gamePageShow"
-      :highScore="liderBoard[0].score"
+      :highScore="leaderBoard[0].score"
       @gameFinished="setFinishPage"
     />
 
@@ -17,7 +17,7 @@
       :score="score"
       :player="playerName"
       @gamePageClicked="setGamePage"
-      @postToLiderboardClicked="postToLiderboardClicked"
+      @postToleaderBoardClicked="postToleaderBoardClicked"
       @homePageClicked="setHomePage"
     />
   </div>
@@ -43,7 +43,7 @@
         homepageShow: true,
         gamePageShow: false,
         finishPageShow: false,
-        liderBoard: [
+        leaderBoard: [
           { name:'hosein', score: 103 },
           { name:'Ali', score: 99 },
           { name:'mmd', score: 99 },
@@ -73,10 +73,10 @@
         this.finishPageShow = false
       },
 
-      postToLiderboardClicked(event) {
-        this.liderBoard.push({ name:this.playerName, score: event })
-        this.liderBoard.sort(this.compare)
-        if(this.liderBoard.length == 5) { this.liderBoard.pop() }
+      postToleaderBoardClicked(event) {
+        this.leaderBoard.push({ name:this.playerName, score: event })
+        this.leaderBoard.sort(this.compare)
+        if(this.leaderBoard.length == 5) { this.leaderBoard.pop() }
         this.setHomePage()
       },
 
