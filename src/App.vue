@@ -1,24 +1,24 @@
 <template>
   <div :class="$style.root">
     <homePage
-      v-if="homepageShow"
+      v-if="page === 'home'"
       :leaderBoard="leaderBoard"
-      @gamePageClicked="setGamePage"
+      @gamePageClicked="setPage('game')"
     />
 
     <gamePage
-      v-if="gamePageShow"
+      v-if="page === 'game'"
       :highScore="leaderBoard[0].score"
       @gameFinished="setFinishPage"
     />
 
     <finishPage
-      v-if="finishPageShow"
+      v-if="page === 'finish'"
       :score="score"
       :player="playerName"
-      @gamePageClicked="setGamePage"
+      @gamePageClicked="setPage('game')"
       @postToleaderBoardClicked="postToleaderBoardClicked"
-      @homePageClicked="setHomePage"
+      @homePageClicked="setPage('home')"
     />
   </div>
 </template>
@@ -40,37 +40,23 @@
 
     data(){
       return {
-        homepageShow: true,
-        gamePageShow: false,
-        finishPageShow: false,
+        page: 'home',
+        score: 0,
+        playerName: 'hosein',
         leaderBoard: [
           { name:'hosein', score: 103 },
           { name:'Ali', score: 99 },
           { name:'mmd', score: 99 },
         ],
-        playerId: '',
-        playerName: 'hosein',
-        score: 0,
       }
     },
 
     methods: {
-      setGamePage(){
-        this.homepageShow = false
-        this.gamePageShow = true
-        this.finishPageShow = false
-      },
+      setPage(page) { this.page = page },
 
       setFinishPage(event) {
-        this.gamePageShow = false
-        this.finishPageShow = true
+        this.setPage('finish')
         this.score = event
-      },
-
-      setHomePage() {
-        this.homepageShow = true
-        this.gamePageShow = false
-        this.finishPageShow = false
       },
 
       postToleaderBoardClicked(event) {
