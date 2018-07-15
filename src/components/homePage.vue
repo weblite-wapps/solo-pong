@@ -12,7 +12,7 @@
     <costomButton
       :class="$style['startLogo']"
       @click="pageClicked"
-      type="start"
+      type="play"
       />
   </div>
 </template>

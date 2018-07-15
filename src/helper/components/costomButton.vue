@@ -1,38 +1,15 @@
 <template>
   <div >
     <img
-      v-if="homepageButtonShow"
-      :class="$style['logo']"
-      src="./../../assets/images/home.png"
-      alt="logo"
+      :class="button.class"
+      :src="button.src"
       @click="clicked"
-      >
-    <img
-      v-if="startButtonShow"
-      :class="$style['logo']"
-      src="./../../assets/images/play.png"
       alt="logo"
-      @click="clicked"
-      >
-    <img
-      v-if="retryButtonShow"
-      :class="$style['logo']"
-      src="./../../assets/images/replay.png"
-      alt="logo"
-      @click="clicked"
-      >
-    <img
-      v-if="pauseButtonShow"
-      :class="$style['pauseLogo']"
-      src="./../../assets/images/pause.png"
-      alt="logo"
-      @click="clicked"
-      >
+    >
   </div>
 </template>
 
 <script>
-
   import bus from "./../function/bus.js"
 
   export default {
@@ -40,30 +17,31 @@
 
     props: {
       type: {
-        type: String
+        type: String,
       }
     },
 
     methods: {
-      clicked(){
-        this.$emit('click')
-      }
+      clicked() { this.$emit('click') },
     },
 
     computed: {
-      homepageButtonShow() { return (this.type == "home") },
+      button() {
+        const buttonObj = {
+          'home': { src: './../../assets/images/home.png', class: 'logo' },
+          'play': { src: './../../assets/images/play.png', class: 'logo' },
+          'replay': { src: './../../assets/images/replay.png', class: 'logo' },
+          'pause': { src: './../../assets/images/pause.png', class: 'pauseLogo' },
+        }
 
-      startButtonShow(){ return (this.type == "start") },
-
-      retryButtonShow(){ return (this.type == "replay") },
-
-      pauseButtonShow(){ return (this.type == "pause") },
+        return buttonObj[this.type]
+      }
     }
   }
 
 </script>
 
-<style module>
+<style scoped>
   .logo {
     width: 40px;
     height: 40px;

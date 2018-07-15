@@ -26,8 +26,8 @@
       <!-- home button -->
       <costomButton
         class="logo"
-        @click="pageClicked('home')"
         type="home"
+        @click="pageClicked('home')"
       />
     </div>
   </div>
