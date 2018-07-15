@@ -8,7 +8,7 @@
 
     <gamePage
       v-if="page === 'game'"
-      :highScore="leaderBoard[0].score"
+      :highScore="leaderBoard[0] ? leaderBoard[0].score : 0"
       @gameFinished="setFinishPage"
     />
 
@@ -62,7 +62,7 @@
         this.leaderBoard.push({ name:this.playerName, score: event })
         this.leaderBoard.sort(this.compare)
         if(this.leaderBoard.length == 5) { this.leaderBoard.pop() }
-        this.setHomePage()
+        this.setPage('home')
       },
 
       compare(a, b) { return (a.score > b.score) ? -1 : (b.score > a.score) ? 1 : 0}
