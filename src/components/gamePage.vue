@@ -1,34 +1,34 @@
 <template>
   <div
-    :class="$style.root"
-    @mousedown.once="startGame"
+    class="root"
+    @mousedown.once="playAndPause"
     @mousemove="changeBatPosition"
   >
     <!-- score and highScore and gameStopButton-->
-    <div :class="$style.scoreTape">
-      <div :class="$style.pTag" @keyup.left="c">
+    <div class="scoreTape">
+      <div class="pTag" @keyup.left="c">
         <p >RECORD : {{highScore}}</p>
         <p >SCORE : {{score}}</p>
       </div>
       <!-- button ro bayad dorost konam -->
       <costomButton
         type="pause"
-        :class="$style.pauseButton"
-        @click="pauseClicked"
+        class="pauseButton"
+        @click="playAndPause"
         />
     </div>
     <hr>
     <!-- ball -->
     <div
       :style="{ left: ballPosition.x+'px', top: 60+ballPosition.y+'px'}"
-      :class="$style.ball"
+      class="ball"
       >
     </div>
     <!-- bat -->
     <div
         @keyup.left="c"
       :style="{ left: batPosition.x+'px', top: batPosition.y+'px'}"
-      :class="$style.bat"
+      class="bat"
       >
     </div>
   </div>
@@ -57,28 +57,20 @@
     data(){
       return {
         score: 0,
-        ballPosition: {
-          x: 200,
-          y: 370
-        },
-        batPosition: {
-          x: 180,
-          y: 450
-        },
-        ballSpeed: {
-          x: 0,
-          y: 0,
-        },
-        gameOnGoing: false
+        ballPosition: { x: 200, y: 370 },
+        batPosition: { x: 180, y: 450 },
+        ballSpeed: { x: 2 + Math.random() * 5, y: -3 },
+        gameOnGoing: false,
+        interval: null,
       }
     },
 
     methods: {
-      startGame(){
-        this.gameOnGoing = true
-        this.ballSpeed.x = .5 + Math.random();
-        this.ballSpeed.y = -1
-        setInterval(() => { if(this.gameOnGoing) this.gameEcosystem() }, 4)
+      playAndPause() {
+        if (this.gameOnGoing) clearInterval(this.interval)
+        else this.interval = setInterval(() => this.gameEcosystem(), 10)
+
+        this.gameOnGoing = !this.gameOnGoing
       },
 
       gameEcosystem(){
@@ -106,7 +98,7 @@
             }
             this.score++
           } else {
-            this.gameOnGoing = false
+            this.playAndPause()
             this.$emit('gameFinished', this.score)
           }
         }
@@ -114,21 +106,18 @@
 
       changeBatPosition:function(event){
         if(this.gameOnGoing){
-          if(event.clientX - (window.innerWidth - 400)/2 <340)
+          if(event.clientX - (window.innerWidth - 400)/2 < 340)
             this.batPosition.x =  event.clientX - (window.innerWidth - 400)/2
           else this.batPosition.x = 340
         }
       },
-
-      pauseClicked() { this.gameOnGoing = !this.gameOnGoing },
     }
   }
 
 </script>
 
-<style module>
+<style scoped>
   .root {
-    width: inherit;
     height: inherit;
     background-color: rgb(255, 253, 244);
     position:absolute;
@@ -174,6 +163,4 @@
     margin-left: 60px;
     margin-top: 10px
   }
-
-
 </style>

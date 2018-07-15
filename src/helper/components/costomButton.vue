@@ -43,7 +43,7 @@
     border-radius: 4px;
   }
 
-  .logo:hover {
+  .home:hover, .play:hover, .replay:hover, .pause:hover {
     box-shadow: 0 0 5px #333;
   }
 </style>
