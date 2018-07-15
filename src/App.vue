@@ -3,7 +3,7 @@
     <homePage
       v-if="page === 'home'"
       :leaderBoard="leaderBoard"
-      @gamePageClicked="setPage('game')"
+      @pageClicked="setPage"
     />
 
     <gamePage
@@ -16,9 +16,8 @@
       v-if="page === 'finish'"
       :score="score"
       :player="playerName"
-      @gamePageClicked="setPage('game')"
       @postToleaderBoardClicked="postToleaderBoardClicked"
-      @homePageClicked="setPage('home')"
+      @pageClicked="setPage"
     />
   </div>
 </template>
@@ -79,5 +78,4 @@
     height: 500px;
     border: 1px #E0E0E0 solid;
   }
-
 </style>

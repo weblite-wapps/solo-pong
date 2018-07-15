@@ -11,7 +11,7 @@
     <!-- home button -->
     <costomButton
       :class="$style['startLogo']"
-      @click="gamePageClicked"
+      @click="pageClicked"
       type="start"
       />
   </div>
@@ -38,9 +38,7 @@
     },
 
     methods: {
-      gamePageClicked(){
-        this.$emit('gamePageClicked')
-      }
+      pageClicked(){ this.$emit('pageClicked', 'game') },
     }
   }
 
