@@ -78,7 +78,7 @@
         this.gameOnGoing = true
         this.ballSpeed.x = .5 + Math.random();
         this.ballSpeed.y = -1
-        var temp = setInterval(() => { if(this.gameOnGoing) this.gameEcosystem() }, 4)
+        setInterval(() => { if(this.gameOnGoing) this.gameEcosystem() }, 4)
       },
 
       gameEcosystem(){
