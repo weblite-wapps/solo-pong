@@ -1,5 +1,8 @@
 <template>
-  <div :class="$style.root">
+  <div
+    :class="$style.root"
+    :style="{width: box.width + 'px', height: box.height + 'px'}"
+    >
     <homePage
       v-if="page === 'home'"
       :leaderBoard="leaderBoard"
@@ -10,6 +13,7 @@
       v-if="page === 'game'"
       :highScore="leaderBoard[0] ? leaderBoard[0].score : 0"
       @gameFinished="setFinishPage"
+      :box="box"
     />
 
     <finishPage
@@ -42,11 +46,11 @@
         page: 'home',
         score: 0,
         playerName: 'hosein',
-        leaderBoard: [
-          { name:'hosein', score: 103 },
-          { name:'Ali', score: 99 },
-          { name:'mmd', score: 99 },
-        ],
+        leaderBoard: [],
+        box: {
+          width: 400,
+          height: 500
+        }
       }
     },
 
@@ -74,8 +78,6 @@
 
 <style module>
   .root {
-    width: 400px;
-    height: 500px;
     border: 1px #E0E0E0 solid;
   }
 </style>

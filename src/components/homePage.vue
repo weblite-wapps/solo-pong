@@ -1,7 +1,6 @@
 <template>
-  <div :class="$style['homeRoot']">
-    <p :class="$style.fake">.</p>
-    <div :class="$style['leaderBoardPlace']">
+  <div class="homeRoot">
+    <div class="leaderBoardPlace">
       <ul>
         <li v-for="(lider, index) in leaderBoard" :key="index">
             {{ lider.name + "  " + lider.score }}
@@ -10,7 +9,6 @@
     </div>
     <!-- home button -->
     <costomButton
-      :class="$style['startLogo']"
       @click="pageClicked"
       type="play"
       />
@@ -44,10 +42,14 @@
 
 </script>
 
-<style module>
+<style scoped>
   .homeRoot {
-    width: 100%;
-    height: 100%;
+    height: inherit;
+    box-sizing: border-box;
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: rgb(249, 249, 249);
   }
 
@@ -57,10 +59,6 @@
     background-color: rgb(190, 190, 203);
     margin:50px auto;
     border-radius: 3px
-  }
-
-  .startLogo {
-    margin-left: 170px;
   }
 
   li {
@@ -73,10 +71,5 @@
     -webkit-padding-start: 0;
     margin-left: 30px;
     padding-top: 15px;
-  }
-
-  .fake {
-    font-size: 0;
-    margin-top: 0;
   }
 </style>

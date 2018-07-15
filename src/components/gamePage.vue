@@ -5,7 +5,7 @@
     @mousemove="changeBatPosition"
   >
     <!-- score and highScore and gameStopButton-->
-    <div class="scoreTape">
+    <div class="scoreTape" >
       <div class="pTag" @keyup.left="c">
         <p >RECORD : {{highScore}}</p>
         <p >SCORE : {{score}}</p>
@@ -47,6 +47,9 @@
       },
       player: {
         type: String
+      },
+      box: {
+        type: Object
       }
     },
 
@@ -57,9 +60,9 @@
     data(){
       return {
         score: 0,
-        ballPosition: { x: 200, y: 370 },
-        batPosition: { x: 180, y: 450 },
-        ballSpeed: { x: 2 + Math.random() * 5, y: -3 },
+        ballPosition: { x: this.box.width / 2, y: this.box.height - 130 },
+        batPosition: { x: this.box.width / 2 - 20, y: this.box.height - 50 },
+        ballSpeed: { x: 2 + Math.random() * 2, y: - 2 },
         gameOnGoing: false,
         interval: null,
       }
@@ -68,7 +71,7 @@
     methods: {
       playAndPause() {
         if (this.gameOnGoing) clearInterval(this.interval)
-        else this.interval = setInterval(() => this.gameEcosystem(), 10)
+        else this.interval = setInterval(() => this.gameEcosystem(), 5)
 
         this.gameOnGoing = !this.gameOnGoing
       },
@@ -85,15 +88,15 @@
       },
 
       checkHitingWalls(){
-        if(this.ballPosition.x > 380 || this.ballPosition.x < 0) this.ballSpeed.x = -this.ballSpeed.x
+        if(this.ballPosition.x > this.box.width - 20 || this.ballPosition.x < 0) this.ballSpeed.x = -this.ballSpeed.x
         if(this.ballPosition.y < 0) this.ballSpeed.y = -this.ballSpeed.y
       },
 
       checkHitingBat(){
-        if(this.ballPosition.y > 370){
+        if(this.ballPosition.y > this.box.height - 130){
           if(this.ballPosition.x < 55 + this.batPosition.x && this.ballPosition.x > this.batPosition.x - 15) {
-            this.ballSpeed.y = -this.ballSpeed.y
-            if(this.ballPosition.x > 45 + this.batPosition.x || this.ballPosition.x < this.batPosition.x - 5){
+            this.ballSpeed.y = -(this.ballSpeed.y + this.score / 20)
+            if(this.ballPosition.x > 35 + this.batPosition.x || this.ballPosition.x < this.batPosition.x +5){
               this.ballSpeed.x += (.5 - Math.random())
             }
             this.score++
@@ -106,9 +109,9 @@
 
       changeBatPosition:function(event){
         if(this.gameOnGoing){
-          if(event.clientX - (window.innerWidth - 400)/2 < 340)
-            this.batPosition.x =  event.clientX - (window.innerWidth - 400)/2
-          else this.batPosition.x = 340
+          if(event.clientX - (window.innerWidth - this.box.width)/2 < this.box.width - 60)
+            this.batPosition.x =  event.clientX - (window.innerWidth - this.box.width)/2
+          else this.batPosition.x = this.box.width - 60
         }
       },
     }
@@ -130,6 +133,8 @@
     height: 50px;
     display: flex;
     flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
   }
 
   hr {
@@ -149,7 +154,8 @@
     text-align: center;
     margin-top: 5px;
     padding-top: 4px;
-    margin-left: 150px
+    flex-direction: row;
+    justify-content: center;
   }
 
   .bat {
