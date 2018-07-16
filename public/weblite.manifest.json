@@ -1,0 +1,17 @@
+{
+  "name": "solo-pong",
+  "id": "5b4c4bef949c95355e24bf43",
+  "instancable": true,
+  "creator": false,
+  "userInfo": true,
+  "fullscreen": false,
+  "inline": true,
+  "shareDB": true,
+  "width": 352,
+  "height": 452,
+  "servIndexes": {
+    "inline": "index",
+    "customize": "index",
+    "main": "index"
+  }
+}

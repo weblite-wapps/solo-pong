@@ -2,7 +2,7 @@
   <div >
     <img
       :class="this.type"
-      :src="`/images/${this.type}.png`"
+      :src="`images/${this.type}.png`"
       @click="clicked"
       alt="logo"
     >

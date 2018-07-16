@@ -27,10 +27,15 @@
 </template>
 
 <script>
-
   import homePage from "./components/homePage.vue"
   import finishPage from "./components/finishPage.vue"
   import gamePage from "./components/gamePage.vue"
+  // helper
+  import { addToLeaderboard } from './helper/function/changeState'
+  import webliteHandler from './helper/function/weblite.api'
+  // W
+  const { W } = window
+
 
   export default {
     name: 'App',
@@ -45,14 +50,13 @@
       return {
         page: 'home',
         score: 0,
-        playerName: 'hosein',
+        playerName: '',
         leaderBoard: [],
-        box: {
-          width: 400,
-          height: 500
-        }
+        box: { width: 350, height: 450 },
       }
     },
+
+    created() { W && webliteHandler(this) },
 
     methods: {
       setPage(page) { this.page = page },
@@ -63,13 +67,9 @@
       },
 
       postToleaderBoardClicked(event) {
-        this.leaderBoard.push({ name:this.playerName, score: event })
-        this.leaderBoard.sort(this.compare)
-        if(this.leaderBoard.length == 5) { this.leaderBoard.pop() }
+        addToLeaderboard(this.playerName, event)
         this.setPage('home')
       },
-
-      compare(a, b) { return (a.score > b.score) ? -1 : (b.score > a.score) ? 1 : 0}
     }
 
   }
