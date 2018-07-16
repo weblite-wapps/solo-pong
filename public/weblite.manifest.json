@@ -4,7 +4,7 @@
   "instancable": true,
   "creator": false,
   "userInfo": true,
-  "fullscreen": false,
+  "fullscreen": true,
   "inline": true,
   "shareDB": true,
   "width": 352,
@@ -12,6 +12,7 @@
   "servIndexes": {
     "inline": "index",
     "customize": "index",
-    "main": "index"
+    "main": "index",
+    "fullscreen": "index"
   }
 }
