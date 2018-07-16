@@ -67,7 +67,7 @@
       },
 
       postToleaderBoardClicked(event) {
-        addToLeaderboard(this.playerName, event)
+        if(event > 0) { addToLeaderboard(this.playerName, event) }
         this.setPage('home')
       },
     }
