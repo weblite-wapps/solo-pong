@@ -62,7 +62,7 @@
         score: 0,
         ballPosition: { x: this.box.width / 2, y: this.box.height - 130 },
         batPosition: { x: this.box.width / 2 - 20, y: this.box.height - 50 },
-        ballSpeed: { x: 2 + Math.random() * 2, y: - 2 },
+        ballSpeed: { x: Math.random() > 0.5 ? 2 : -2, y: - 2 },
         gameOnGoing: false,
         interval: null,
       }
@@ -96,8 +96,8 @@
         if(this.ballPosition.y > this.box.height - 130){
           if(this.ballPosition.x < 55 + this.batPosition.x && this.ballPosition.x > this.batPosition.x - 15) {
             this.ballSpeed.y = -(this.ballSpeed.y + this.score / 20)
-            if(this.ballPosition.x > 35 + this.batPosition.x || this.ballPosition.x < this.batPosition.x +5){
-              this.ballSpeed.x += (.5 - Math.random())
+            if(this.ballPosition.x > 40 + this.batPosition.x || this.ballPosition.x < this.batPosition.x ){
+              this.ballSpeed.x += (.2 - .4 * Math.random())
             }
             this.score++
           } else {

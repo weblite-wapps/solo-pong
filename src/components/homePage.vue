@@ -54,11 +54,11 @@
   }
 
   .leaderBoardPlace {
-    width: 50%;
+    width: 70%;
     height: 50%;
     background-color: rgb(190, 190, 203);
-    margin:50px auto;
-    border-radius: 3px
+    margin:35px auto;
+    border-radius: 3px;
   }
 
   li {
