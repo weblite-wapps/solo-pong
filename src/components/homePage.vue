@@ -51,25 +51,29 @@
     flex-direction: column;
     align-items: center;
     background-color: rgb(249, 249, 249);
+    padding-bottom: 10px;
   }
 
   .leaderBoardPlace {
-    width: 70%;
-    height: 50%;
+    width: 80%;
+    height: 70%;
     background-color: rgb(190, 190, 203);
-    margin:35px auto;
+    margin: auto;
     border-radius: 3px;
+    margin-bottom: 20px;
+    margin-top: 0;
+    overflow: auto;
   }
 
   li {
     list-style: none;
     padding-top: 10px;
-    font-size: 20px
+    font-size: 18px;
+    text-align: center;
   }
 
   ul {
     -webkit-padding-start: 0;
-    margin-left: 30px;
-    padding-top: 15px;
+    padding-top: 20px;
   }
 </style>
