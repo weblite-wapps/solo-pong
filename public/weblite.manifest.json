@@ -1,6 +1,7 @@
 {
   "name": "solo-pong",
-  "id": "5b4c4bef949c95355e24bf43",
+  "id": "5c4c28c2e50e46486b155fc6",
+  "searchable": true,
   "instancable": true,
   "creator": false,
   "userInfo": true,
