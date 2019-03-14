@@ -2,7 +2,7 @@
   "name": "solo-pong",
   "id": "5c4c28c2e50e46486b155fc6",
   "searchable": true,
-  "instancable": true,
+  "instantiable": true,
   "creator": false,
   "userInfo": true,
   "fullscreen": true,
